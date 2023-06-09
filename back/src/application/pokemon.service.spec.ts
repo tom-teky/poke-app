@@ -2,20 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PokemonService } from './pokemon.service';
 import { PokemonRepository } from '../infrastructure/pokemon/pokemon.repository';
 
-// jest.mock('node-fetch', () =>
-//   jest.fn().mockImplementation(() =>
-//     Promise.resolve({
-//       json: () => ({
-//         results: [
-//           { name: 'bulbasaur', id: 1, sprites: 'bulbasaur-sprite-url' }, 
-//           { name: 'charmander', id: 2, sprites: 'charmander-sprite-url' },
-//           { name: 'squirtle', id: 3, sprites: 'squirtle-sprite-url' },
-//         ],
-//       }),
-//     })
-//   )
-// );
-
 describe('PokemonService', () => {
   let pokemonService: PokemonService;
   let pokemonRepository: PokemonRepository;
@@ -44,10 +30,11 @@ describe('PokemonService', () => {
         { name: 'charmander', id: 2, sprites: 'charmander-sprite-url' },
         { name: 'squirtle', id: 3, sprites: 'squirtle-sprite-url' },
       ];
+      const queryparams = { limit: 3, offset: 0 }
 
       jest.spyOn(pokemonService, 'getAllPokemonWithSprites').mockResolvedValue(pokemonData);
 
-      const result = await pokemonService.getAllPokemonWithSprites();
+      const result = await pokemonService.getAllPokemonWithSprites(queryparams);
 
       expect(result).toEqual(pokemonData);
     });

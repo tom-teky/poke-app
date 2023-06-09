@@ -1,12 +1,17 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { PokemonService } from './pokemon.service';
+
+export type QueryParams = {
+  limit: number,
+  offset: number
+}
 
 @Controller('pokemon')
 export class PokemonController {
   constructor(private readonly pokemonService: PokemonService) {}
 
   @Get()
-  async getAllPokemonWithSprites() {
-    return this.pokemonService.getAllPokemonWithSprites();
+  async getAllPokemonWithSprites(@Query() query: QueryParams) {
+    return this.pokemonService.getAllPokemonWithSprites(query);
   }
 }

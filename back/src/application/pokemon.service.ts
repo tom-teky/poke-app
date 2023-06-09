@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { Pokemon } from '../domain/pokemon/pokemon.entity';
+import { QueryParams } from './pokemon.controller';
+import qs from 'node:querystring';
 
 @Injectable()
 export class PokemonService {
-  async getAllPokemonWithSprites(): Promise<Pokemon[]> {
-    const response = await axios.get('https://pokeapi.co/api/v2/pokemon');
+  async getAllPokemonWithSprites({ limit, offset }: QueryParams ): Promise<Pokemon[]> {
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
     const data = response.data.results;
 
     const pokemonList: Pokemon[] = [];
