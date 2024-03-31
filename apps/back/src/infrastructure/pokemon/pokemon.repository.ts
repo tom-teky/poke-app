@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { Pokemon } from '../../domain/pokemon/pokemon.entity';
+import { PokemonSprite } from '../../domain/pokemon/pokemonSprite.entity';
 
 @Injectable()
 export class PokemonRepository {
-  async getAllPokemon(): Promise<Pokemon[]> {
+  async getAllPokemon(): Promise<PokemonSprite[]> {
     const response = await axios.get('https://pokeapi.co/api/v2/pokemon');
     const data = response.data.results;
 
-    const pokemonList: Pokemon[] = [];
+    const pokemonList: PokemonSprite[] = [];
 
     for (const result of data) {
       const pokemonName = result.name;
@@ -19,11 +19,13 @@ export class PokemonRepository {
     return pokemonList;
   }
 
-  private async getPokemonByName(name: string): Promise<Pokemon> {
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+  private async getPokemonByName(name: string): Promise<PokemonSprite> {
+    const response = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${name}`,
+    );
     const data = response.data;
 
-    const pokemon: Pokemon = {
+    const pokemon: PokemonSprite = {
       name: data.name,
       id: data.id,
       sprites: data['official-artwork'].front_default,
