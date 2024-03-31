@@ -15,13 +15,13 @@ function App() {
 
   const handlePokemons = async () => {
     const res = await axios.get(
-      `http://localhost:3000/pokemon?limit=9&offset=${nextUrl}`
+      `http://localhost:3000/pokemon?limit=12&offset=${nextUrl}`
     );
 
     setPokemons((p) => [
       ...new Map([...p, ...res.data].map((item) => [item.id, item])).values(),
     ]);
-    setNextUrl((offset) => offset + 9);
+    setNextUrl((offset) => offset + 12);
   };
 
   useEffect(() => {

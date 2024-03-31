@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import styles from "./PokemonDetails.module.scss";
 
 type Sprite = {
   officialArt: string;
@@ -50,32 +51,34 @@ export const PokemonDetails = () => {
   useEffect(() => {
     handlePokemonDetails();
   }, []);
-
   if (pokemonDetails) {
+    const pokemonType = pokemonDetails.types
     return (
       <>
         <img
-          className=""
+          className={styles.mainImage}
           src={pokemonDetails.sprites.officialArt}
           alt={`${pokemonDetails?.name} image`}
         />
         <h2>{pokemonDetails.name}</h2>
-        <div className="spritesContainer">
+        <div className={styles.spritesContainer}>
           <img src={pokemonDetails.sprites.frontDefault} className="spritesContainer_image" alt="front_default" />
           <img src={pokemonDetails.sprites.backDefault} className="spritesContainer_image" alt="back_default" />
           <img src={pokemonDetails.sprites.frontShiny} className="spritesContainer_image" alt="front_shiny" />
           <img src={pokemonDetails.sprites.backShiny} className="spritesContainer_image" alt="front_default" />
         </div>
-        <p>{pokemonDetails.types}</p>
+        <span className={`${styles['pkm-type']} ${styles[pokemonType]}`} >
+          {pokemonDetails.types}
+        </span>
 
 
         <ul>
-          <li>Health: {pokemonDetails?.stats.health}</li>
-          <li>Attack: {pokemonDetails?.stats.attack}</li>
-          <li>Defense: {pokemonDetails?.stats.defense}</li>
-          <li>Attack Spe: {pokemonDetails?.stats.attackSpe}</li>
-          <li>Defense Spe: {pokemonDetails?.stats.defenseSpe}</li>
-          <li>Speed: {pokemonDetails?.stats.speed}</li>
+          <li>Health: {pokemonDetails.stats.health}</li>
+          <li>Attack: {pokemonDetails.stats.attack}</li>
+          <li>Defense: {pokemonDetails.stats.defense}</li>
+          <li>Attack Spe: {pokemonDetails.stats.attackSpe}</li>
+          <li>Defense Spe: {pokemonDetails.stats.defenseSpe}</li>
+          <li>Speed: {pokemonDetails.stats.speed}</li>
         </ul>
       </>
     );
